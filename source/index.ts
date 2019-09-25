@@ -24,13 +24,12 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-    if (message.content.startsWith(config.discord.command_prefix)) {
-        const withoutPrefix = message.content.substring(config.discord.command_prefix.length);
+    const commandMatch = message.content.match(new RegExp(`^${config.discord.command_prefix}(.+?)(?:\\s|$)`));
 
+    if (commandMatch !== null)
         for (const command of commands)
-            if (withoutPrefix.startsWith(command.name + ' '))
+            if (commandMatch[1] === command.name)
                 command.action(message);
-    }
 });
 
 client.login(config.discord.api_key);
