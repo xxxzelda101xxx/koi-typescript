@@ -12,6 +12,9 @@ for (const dirent of readdirSync(`${__dirname}/commands`, { withFileTypes: true 
         commands.push(require(`./commands/${dirent.name}`).default);
 
 client.on('ready', () => {
+    if (client.user === null)
+        return;
+
     console.log(`Logged in as ${client.user.tag}!`);
 
     client.user.setPresence({
