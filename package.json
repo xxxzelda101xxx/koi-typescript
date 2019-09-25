@@ -2,7 +2,10 @@
     "private": true,
     "dependencies": {
         "discord.js": "github:discordjs/discord.js",
-        "node-opus": "^0.3.2"
+        "mysql": "^2.17.1",
+        "node-opus": "^0.3.2",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.19"
     },
     "devDependencies": {
         "@types/node": "^12.7.7"

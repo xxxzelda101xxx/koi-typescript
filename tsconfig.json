@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "outDir": "build",
         "resolveJsonModule": true,
         "strictNullChecks": true

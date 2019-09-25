@@ -1,5 +1,6 @@
 import * as Discord from 'discord.js';
 import { readdirSync } from 'fs';
+import 'reflect-metadata';
 import { Command } from './command';
 import * as config from '../config.json';
 
