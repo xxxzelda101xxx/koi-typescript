@@ -1,4 +1,8 @@
 {
+    "debug": {
+        "channel_id": "",
+        "enabled": false
+    },
     "discord": {
         "api_key": "",
         "command_prefix": ""
