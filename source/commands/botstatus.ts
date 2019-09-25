@@ -16,6 +16,6 @@ export default <Command> {
             `Memory usage: ${Math.round(process.memoryUsage().rss / 1024 / 1000)}MB`
         ];
 
-        await message.channel.send(reply)
+        await message.channel.send(reply);
     }
 }
