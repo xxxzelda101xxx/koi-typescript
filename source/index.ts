@@ -7,18 +7,6 @@ import * as config from '../config.json';
 const client = new Discord.Client();
 const commands: Array<Command> = [];
 
-if (config.debug.enabled) {
-    const debugChannel = <Discord.TextChannel | Discord.DMChannel> client.channels.get(config.debug.channel_id);
-
-    console.log(debugChannel);
-
-    if (debugChannel !== undefined)
-        process.on('uncaughtException', async (error) => {
-            console.error(error);
-            await debugChannel.send(`Uncaught exception:\n${error}`);
-            process.exit(1);
-        });
-}
 
 for (const dirent of readdirSync(`${__dirname}/commands`, { withFileTypes: true }))
     if (dirent.isFile() && dirent.name.endsWith('.js'))
@@ -37,6 +25,19 @@ client.on('ready', () => {
             type: 'LISTENING'
         }
     });
+
+    if (config.debug.enabled) {
+        const debugChannel = <Discord.TextChannel | Discord.DMChannel> client.channels.get(config.debug.channel_id);
+
+        console.log(debugChannel);
+
+        if (debugChannel !== undefined)
+            process.on('uncaughtException', async (error) => {
+                console.error(error);
+                await debugChannel.send(`Uncaught exception:\n${error}`);
+                process.exit(1);
+            });
+    }
 });
 
 client.on('message', message => {
