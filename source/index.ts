@@ -28,15 +28,16 @@ client.on('ready', () => {
 
     if (config.debug.enabled) {
         const debugChannel = <Discord.TextChannel> client.channels.get(config.debug.channel_id);
-        const handleError = async (error: unknown): Promise<void> => {
-            if (error instanceof Error)
-                await debugChannel.send(`**Unhandled error:**\n${error.stack}`.substring(0, 2000));
-
-            console.error(error);
-            process.exit(1);
-        }
 
         if (debugChannel !== undefined && debugChannel instanceof Discord.TextChannel) {
+            const handleError = async (error: unknown): Promise<void> => {
+                if (error instanceof Error)
+                    await debugChannel.send(`**Unhandled error:**\n${error.stack}`.substring(0, 2000));
+
+                console.error(error);
+                process.exit(1);
+            }
+
             process.on('uncaughtException', handleError);
             process.on('unhandledRejection', handleError);
         }
