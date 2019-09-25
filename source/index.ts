@@ -11,7 +11,7 @@ for (const dirent of readdirSync(`${__dirname}/commands`, { withFileTypes: true 
     if (dirent.isFile() && dirent.name.endsWith('.js'))
         commands.push(require(`./commands/${dirent.name}`).default);
 
-client.on('ready', async () => {
+client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 
     client.user.setPresence({
