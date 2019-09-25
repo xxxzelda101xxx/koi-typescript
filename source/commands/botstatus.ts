@@ -14,7 +14,7 @@ export default <Command> {
         const reply: Array<string> = [
             `Hello, I'm ${message.client.user.username}, nice to meet you!`,
             `I'm used by ${pluralize('user', message.client.users.size)} in ${pluralize('server', message.client.guilds.size)} and ${pluralize('channel', message.client.channels.size)}.`,
-            `My uptime is ${Math.round(message.client.uptime / 1000 / 60 / 60)} hours, ${Math.round(message.client.uptime / 1000 / 60) % 60} minutes, and ${(message.client.uptime / 1000) % 60} seconds.`,
+            `My uptime is ${Math.round(message.client.uptime / 1000 / 60 / 60)} hours, ${Math.round(message.client.uptime / 1000 / 60) % 60} minutes, and ${Math.round(message.client.uptime / 1000) % 60} seconds.`,
             `Memory usage: ${Math.round(process.memoryUsage().rss / 1024 / 1000)}MB`
         ];
 
