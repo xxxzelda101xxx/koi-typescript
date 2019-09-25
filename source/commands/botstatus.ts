@@ -1,13 +1,12 @@
-import { Command } from '../interfaces';
+import { NamedCommand } from '../command';
 
 function pluralize(text: string, value: number): string {
     return value + ' ' + (value === 1 ? text : text + 's');
 }
 
-export default <Command> {
-    name: 'botstatus',
-    permission: 'NONE',
-    action: async (message) => {
+export default new NamedCommand(
+    'botstatus',
+    async (message) => {
         if (message.client.user === null || message.client.uptime === null)
             return;
 
@@ -19,5 +18,6 @@ export default <Command> {
         ];
 
         await message.channel.send(reply);
-    }
-}
+    },
+    'NONE'
+);

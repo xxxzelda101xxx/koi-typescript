@@ -1,8 +1,7 @@
 import * as Discord from 'discord.js';
 import { readdirSync } from 'fs';
-
+import { Command } from './command';
 import * as config from '../config.json';
-import { Command } from './interfaces';
 
 const client = new Discord.Client();
 const commands: Array<Command> = [];
@@ -27,12 +26,9 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-    const commandMatch = message.content.match(new RegExp(`^${config.discord.command_prefix}(.+?)(?:\\s|$)`));
-
-    if (commandMatch !== null)
-        for (const command of commands)
-            if (commandMatch[1] === command.name)
-                command.action(message);
+    for (const command of commands)
+        if (command.match(message.content))
+            command.action(message);
 });
 
 client.login(config.discord.api_key);
