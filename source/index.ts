@@ -29,10 +29,8 @@ client.on('ready', () => {
     if (config.debug.enabled) {
         const debugChannel = <Discord.TextChannel | Discord.DMChannel> client.channels.get(config.debug.channel_id);
         const handleError = async (error: unknown): Promise<void> => {
-            if (error instanceof Error) {
-                const message = `Error: [${error.name}] ${error.message}\n` + error.stack;
-                await debugChannel.send(message.substring(0, 2000));
-            }
+            if (error instanceof Error)
+                await debugChannel.send(`**Unhandled error:**\n${error.stack}`.substring(0, 2000));
 
             console.error(error);
             process.exit(1);
