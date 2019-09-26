@@ -1,24 +1,26 @@
-import { NamedCommand } from '../command';
 import { MessageEmbed } from 'discord.js';
+import { NamedCommand } from '../command';
 
 export default new NamedCommand(
     'serverinfo',
     async (message) => {
-        if (message.client.user === null || message.guild === null || message.guild.owner === null)
+        if (message.guild === null || message.guild.owner === null)
             return;
-        const data = new MessageEmbed()
-        data.setTitle(`${message.guild.name} (${message.guild.id})`)
-        const icon = message.guild.iconURL()
-        if (icon !== null) {
-            data.setThumbnail(icon)
-        }
-        data.addField("Members", message.guild.members.array().length, true)
-        data.addField("Roles", message.guild.roles.array().length, true)
-        data.addField("Region", message.guild.region, true)
-        data.addField("Server Created", `${message.guild.createdAt.getUTCDate()}/${message.guild.createdAt.getUTCMonth()}/${message.guild.createdAt.getUTCFullYear()}`, true)
-        data.addField("Server Owner", `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true)
-        data.addField("Channels", message.guild.channels.array().length, true);
-        await message.channel.send(data);
+
+        const embed = new MessageEmbed({ title: `${message.guild.name} (${message.guild.id})` });
+
+        const icon = message.guild.iconURL();
+        if (icon !== null)
+            embed.setThumbnail(icon);
+
+        embed.addField('Members', message.guild.members.size, true);
+        embed.addField('Roles', message.guild.roles.size, true);
+        embed.addField('Region', message.guild.region, true);
+        embed.addField('Server created', `${message.guild.createdAt.getUTCDate()}/${message.guild.createdAt.getUTCMonth()}/${message.guild.createdAt.getUTCFullYear()}`, true);
+        embed.addField('Server owner', `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true);
+        embed.addField('Channels', message.guild.channels.size, true);
+
+        await message.channel.send(embed);
     },
     'NONE'
 );
