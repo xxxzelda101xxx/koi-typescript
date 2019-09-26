@@ -48,8 +48,12 @@ client.on('ready', () => {
 
 client.on('message', message => {
     for (const command of commands)
-        if (command.match(message.content))
-            command.action(message);
+        if (command.match(message.content)) {
+            const spaceIndex = message.content.indexOf(' ', config.discord.command_prefix.length);
+            const args = spaceIndex === -1 ? '' : message.content.substring(spaceIndex + 1);
+
+            command.action(message, args);
+        }
 });
 
 client.login(config.discord.api_key);

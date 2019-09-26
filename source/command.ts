@@ -3,7 +3,7 @@ import { discord } from '../config.json';
 
 export abstract class Command {
     public constructor(
-        public action: (message: Message) => Promise<void>,
+        public action: (message: Message, args: string) => Promise<void>,
         public permission: 'NONE'|'TRUSTED'|'ADMIN'
     ) {}
 
@@ -13,7 +13,7 @@ export abstract class Command {
 export class MatchedCommand extends Command {
     public constructor(
         private pattern: RegExp,
-        action: (message: Message) => Promise<void>,
+        action: (message: Message, args: string) => Promise<void>,
         permission: 'NONE'|'TRUSTED'|'ADMIN'
     ) {
         super(action, permission);
@@ -27,7 +27,7 @@ export class MatchedCommand extends Command {
 export class NamedCommand extends Command {
     public constructor(
         private name: string,
-        action: (message: Message) => Promise<void>,
+        action: (message: Message, args: string) => Promise<void>,
         permission: 'NONE'|'TRUSTED'|'ADMIN'
     ) {
         super(action, permission);
