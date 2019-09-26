@@ -1,12 +1,14 @@
 import * as Discord from 'discord.js';
 import { readdirSync } from 'fs';
 import 'reflect-metadata';
+import { createConnection, getConnection } from 'typeorm';
 import { Command } from './command';
 import * as config from '../config.json';
 
 const client = new Discord.Client();
 const commands: Array<Command> = [];
 
+createConnection();
 
 for (const dirent of readdirSync(`${__dirname}/commands`, { withFileTypes: true }))
     if (dirent.isFile() && dirent.name.endsWith('.js'))
