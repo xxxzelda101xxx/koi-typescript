@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import { createConnection, getConnection } from 'typeorm';
 import { Command } from './command';
 import * as config from '../config.json';
+import { CustomCommand } from './models/customcommand';
 
 const client = new Discord.Client();
 const commands: Array<Command> = [];
@@ -54,6 +55,22 @@ client.on('message', message => {
 
             command.action(message, args);
         }
+
+    if (message.guild !== null) {
+        const commandMatch = message.content.match(new RegExp(`${config.discord.command_prefix}(.+?)(\\s|$)`));
+
+        if (commandMatch !== null)
+            getConnection()
+                .getRepository(CustomCommand)
+                .findOne({
+                    name: commandMatch[1],
+                    guildId: message.guild.id
+                })
+                .then(customCommand => {
+                    if (customCommand !== undefined)
+                        customCommand.respond(message);
+                });
+    }
 });
 
 client.login(config.discord.api_key);
